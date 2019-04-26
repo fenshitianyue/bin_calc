@@ -10,10 +10,10 @@ typedef enum{ FALSE = 0, TRUE } Bool;
 int my_pow(int x, int y);
 void binary_print(int data);
 int _2to10(char* data);
-void my_add(Bool* iswork);
-void my_sub(Bool* iswork);
-void my_mul(Bool* iswork);
-void my_div(Bool* iswork);
+void my_add();
+void my_sub();
+void my_mul();
+void my_div();
 void MainLoop();
 
 /* test case */
@@ -31,15 +31,16 @@ void MainLoop(){
 	while (IsWork){
 		printf("选择要进行的运算/操作：\n  [1.加法 | 2.减法 | 3.乘法 | 4.除法 | 5.清屏 | 6.退出]\n");
 		printf(">>>");
-		scanf("%[^\n]%*c", &option);
+    option = getchar();
+    fflush(stdin);
 		switch (option){
-		case '1': my_add(&IsWork);
+		case '1': my_add();
 			break;
-		case '2': my_sub(&IsWork);
+		case '2': my_sub();
 			break;
-		case '3': my_mul(&IsWork);
+		case '3': my_mul();
 			break;
-		case '4': my_div(&IsWork);
+		case '4': my_div();
 			break;
 		case '5': system("clear");
 			break;
@@ -54,7 +55,7 @@ void MainLoop(){
 	}
 }
 
-void my_add(Bool* iswork){
+void my_add(){
 	char binary_num1[BINARY_SIZE] = { 0 };
 	char binary_num2[BINARY_SIZE] = { 0 };
 	printf("输入第一个加数：");
@@ -69,11 +70,9 @@ void my_add(Bool* iswork){
 	printf("运算结果为：");
 	binary_print(result);
 	printf("\n\n");
-
-	*iswork = TRUE;
 }
 
-void my_sub(Bool* iswork){
+void my_sub(){
 	char binary_num1[BINARY_SIZE] = { 0 };
 	char binary_num2[BINARY_SIZE] = { 0 };
 	printf("输入被减数：");
@@ -87,10 +86,9 @@ void my_sub(Bool* iswork){
 	printf("运算结果为：");
 	binary_print(result);
 	printf("\n\n");
-
-	*iswork = TRUE;
 }
-void my_mul(Bool* iswork){
+
+void my_mul(){
 	char binary_num1[BINARY_SIZE] = { 0 };
 	char binary_num2[BINARY_SIZE] = { 0 };
 	printf("输入第一个因数：");
@@ -105,11 +103,9 @@ void my_mul(Bool* iswork){
 	printf("运算结果为：");
 	binary_print(result);
 	printf("\n\n");
-
-	*iswork = TRUE;
-
 }
-void my_div(Bool* iswork){
+
+void my_div(){
 	char binary_num1[BINARY_SIZE] = { 0 };
 	char binary_num2[BINARY_SIZE] = { 0 };
 	printf("输入被除数：");
@@ -120,16 +116,13 @@ void my_div(Bool* iswork){
 	int num2 = _2to10(binary_num2);
 	if (!num2){ //如果除数为0，则退出运算
 		printf("除数有误！！！\n");
-		*iswork = FALSE;
-		return;
+    exit(EXIT_FAILURE);
 	}
 
 	int result = num1 / num2;
 	printf("运算结果为：");
 	binary_print(result);
 	printf("\n\n");
-
-	*iswork = TRUE;
 }
 
 int my_pow(int x, int y){
@@ -181,6 +174,7 @@ void binary_print(int data){
 		for (int i = 0; i < 32; ++i)
 			printf("%c", tmp[i]);
 		return;
-	}
-	printf("0");
+  }else{
+    printf("0");
+  }
 }
